@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '10.0'
+
+target 'GroveBar_Example' do
+  pod 'GroveBar', :path => '../'
+
+  target 'GroveBar_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end

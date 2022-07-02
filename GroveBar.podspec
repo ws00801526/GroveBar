@@ -27,9 +27,8 @@ TODO: Add long description of the pod here.
   s.author           = { 'ws00801526' => 'chenmaolei@zuifuli.com' }
   s.source           = { :git => 'https://github.com/ws00801526/GroveBar.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
-
-  s.ios.deployment_target = '10.0'
-
+  s.ios.deployment_target = '12.0'
+  s.swift_version = '5.4'
   s.source_files = 'GroveBar/Classes/**/*'
   
   # s.resource_bundles = {

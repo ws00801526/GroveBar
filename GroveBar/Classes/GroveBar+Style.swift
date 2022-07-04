@@ -12,19 +12,48 @@ import Foundation
 public extension GroveBar {
     
     struct Style {
-
-        public var title: TextStyle = .init(color: .darkGray)
-        public var subtitle: TextStyle = .init(color: .lightGray, font: .systemFont(ofSize: 12.0))
-        public var leftView: ViewStyle = .init()
-        public var background: BackgroundStyle = .init()
-        public var progressBar: ProgressBarStyle = .init()
-        public var systemStatusBar: SystemBarStyle = .default
-        public var animationStyle: AnimationStyle = .bounce
-        public var animatorGenerator: ((StyleBarViewProtocol) -> AnimatorProtocol)? = nil
-        public var rubberBandingLimit: CGFloat = 20.0
-        public var canTapToHold: Bool = true
-        public var canSwipeToDismiss: Bool = true
-        public var canDismissDuringUserInteraction: Bool = false
+        
+        /// The style of title.
+        public var title: TextStyle
+        /// The style of subtitle.
+        public var subtitle: TextStyle
+        /// The style of leftView.
+        public var leftView: ViewStyle
+        /// The style of background.
+        public var background: BackgroundStyle
+        /// The style of progress bar.
+        public var progressBar: ProgressBarStyle
+        /// The style of system status bar. Default is `default`
+        public var systemStatusBar: SystemBarStyle
+        /// The animation of `BarView`. Default is `.bounce`
+        ///
+        /// It will be ignored if you provide
+        public var animationStyle: AnimationStyle
+        /// The generator of animator.
+        ///
+        /// Can provide your customized animator for `BarView`
+        public var animatorGenerator: ((StyleBarViewProtocol) -> AnimatorProtocol)?
+        /// The value can swipe limit. Default is 20
+        public var rubberBandingLimit: CGFloat
+        /// Defines if the bar can be dismissed by the user swiping up. Default is `true`.
+        ///
+        /// Under the hood this enables/disables the internal `PanGestureRecognizer`.
+        public var canTapToHold: Bool
+        /// Defines if the bar can be touched to prevent a dismissal until the tap is released. Default is `true`.
+        ///
+        /// If ``GroveBar.Style.canTapToHold`` is `true`
+        /// and ``GroveBar.Style.canDismissDuringUserInteraction`` is `false`,
+        /// the user can tap the notification to prevent it from being dismissed until the tap is released.
+        ///
+        /// If you are utilizing a custom view and need custom touch handling (e.g. for a button), you should set this to `false`.
+        /// Under the hood this enables/disables the internal `LongPressGestureRecognizer`.
+        public var canSwipeToDismiss: Bool
+        /// Defines if the bar is allowed to be dismissed while the user touches or pans the view.
+        ///
+        /// The default is `false`, meaning that a notification stays presented as long as a touch or pan is active.
+        /// Once the touch is released, the view will be dismised (if a dismiss call was made during the interaction).
+        /// Any passed-in dismiss completion block will still be executed, once the actual dismissal happened.
+        public var canDismissDuringUserInteraction: Bool
         
         public init(title: GroveBar.Style.TextStyle = .init(color: .darkGray),
                     subtitle: GroveBar.Style.TextStyle = .init(color: .lightGray, font: .systemFont(ofSize: 12.0)),
@@ -34,7 +63,7 @@ public extension GroveBar {
                     systemStatusBar: GroveBar.Style.SystemBarStyle = .default,
                     animationStyle: GroveBar.Style.AnimationStyle = .bounce,
                     animatorGenerator: ((StyleBarViewProtocol) -> AnimatorProtocol)? = nil,
-                    rubberBandingLimit: CGFloat = 40.0,
+                    rubberBandingLimit: CGFloat = 20.0,
                     canSwipeToDismiss: Bool = true,
                     canTapToHold: Bool = true,
                     canDismissDuringUserInteraction: Bool = false) {
@@ -64,9 +93,14 @@ public extension GroveBar.Style {
             case center
         }
         
-        public var size: CGSize? = nil
-        public var spacing: CGFloat = 5.0
-        public var alignment: Alignment = .center
+        /// The size of leftView. Default is nil.
+        ///
+        /// If size is nil or `.zero`. LeftView will actived widthAnchor == heightAnchor constraints.
+        public var size: CGSize?
+        /// The space between leftView & titleLabel
+        public var spacing: CGFloat
+        /// The alignment of titleLabel, only used while leftView != nil. Default is `.center`
+        public var alignment: Alignment
         
         public init(size: CGSize? = nil, spacing: CGFloat = 5.0, alignment: Alignment = .center) {
             self.size = size
@@ -81,10 +115,15 @@ public extension GroveBar.Style {
 public extension GroveBar.Style {
     
     struct TextStyle {
+        /// The color of text
         public var color: UIColor? = nil
+        /// The font of text. Default is `.systemFont(ofSize: 14.0)`
         public var font: UIFont = .systemFont(ofSize: 14.0)
+        /// The shadowColor of text. Default is nil
         public var shadowColor: UIColor? = nil
+        /// The shadowOffset of text, it will be ignored while shadowColor == nil. Default is size(1.0, 2.0)
         public var shadowOffset: CGSize = .init(width: 1.0, height: 2.0)
+        /// The custom attribues of text.
         public var attributes: [NSAttributedString.Key : Any]?
         
         public init(color: UIColor? = nil,
@@ -111,17 +150,28 @@ public extension GroveBar.Style {
             case pill
             case fullWidth
         }
-
+        
+        /// The style of background. Default is `.pill`
         public var style: Style = .pill
+        /// The color of background. Default is .white
         public var color: UIColor = .white
-        public var height: CGFloat = 50.0
+        /// The top space of background only used while style == .pill. Default is .zero
         public var topSpacing: CGFloat = .zero
+        /// The content insets of background. Default is (5.0, 20.0, 5.0, 20.0)
         public var contentInsets: UIEdgeInsets = .init(top: 5.0, left: 20.0, bottom: 5.0, right: 20.0)
+        /// The minimum height of background only used while style == .pill. Default is 50
+        public var minimumHeight: CGFloat = 50.0
+        /// The minimum width of background only used while style == .pill. Default is 200
         public var minimumWidth: CGFloat = 200.0
+        /// The border color of background only used while style == .pill. Default is .clear
         public var borderColor: UIColor = .clear
+        /// The border width of background only used while style == .pill. Default is .0.5
         public var borderWidth: CGFloat = 0.5
+        /// The shadow color of background only used while style == .pill. Default is .black(0.5)
         public var shadowColor: UIColor = .black.withAlphaComponent(0.3)
+        /// The shadow radius of background only used while style == .pill. Default is 4.0
         public var shadowRadius: CGFloat = 4.0
+        /// The shadow offset of background only used while style == .pill. Default is (0.0, 2.0)
         public var shadowOffset: CGSize = .init(width: 0.0, height: 2.0)
         
         public init(style: GroveBar.Style.BackgroundStyle.Style = .pill,
@@ -137,7 +187,7 @@ public extension GroveBar.Style {
                     shadowOffset: CGSize = .init(width: 0.0, height: 2.0)) {
             self.style = style
             self.color = color
-            self.height = height
+            self.minimumHeight = height
             self.topSpacing = topSpacing
             self.contentInsets = contentInsets
             self.minimumWidth = minimumWidth
@@ -162,19 +212,25 @@ public extension GroveBar.Style {
             case bottom
         }
         
+        /// The color of progress bar. Default is RGB(36, 159, 230)
         public var color: UIColor?
-        public var height: CGFloat = 2.0
-        public var position: Position = .bottom
-        public var cornerRadius: CGFloat = 1.0
-        public var horizontalInsets: CGFloat = 20.0
-        public var yOffset: CGFloat = -5.0
+        /// The height of progress bar. Default is 2.0
+        public var height: CGFloat
+        /// The position of progress bar. Default is ``Position.bottom``
+        public var position: Position
+        /// The cornerRadius of progress bar. Default is 1.0
+        public var cornerRadius: CGFloat
+        /// The horizontalInsets of progress bar. Default is 20.0
+        public var horizontalInsets: CGFloat
+        /// The yOffset of progress bar. Default is -3.0
+        public var yOffset: CGFloat
         
         public init(color: UIColor? = .init(red: 36.0 / 255.0, green: 159.0 / 255.0, blue: 230.0 / 255.0, alpha: 1.0),
                     height: CGFloat = 2.0,
                     horizontalInsets: CGFloat = 20.0,
                     position: Position = .bottom,
                     cornerRadius: CGFloat = 1.0,
-                    yOffset: CGFloat = -5.0) {
+                    yOffset: CGFloat = -3.0) {
             self.color = color
             self.height = height
             self.position = position
@@ -194,7 +250,7 @@ public extension GroveBar.Style {
         case move
         case fade
     }
-        
+
     enum SystemBarStyle {
         case `default`
         case lightContent

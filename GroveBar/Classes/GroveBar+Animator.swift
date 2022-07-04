@@ -42,16 +42,18 @@ extension GroveBar {
 
             let (style, barView) = (barView.style, self.barView)
             
-            // reset
+            // Reset old animation & completion
             self.completion = nil
             barView.layer.removeAllAnimations()
             
+            // Reset to initial state
             if style.animationStyle == .fade {
                 (barView.alpha, barView.transform) = (.zero, .identity)
             } else {
                 (barView.alpha, barView.transform) = (1.0, barView.transform.translatedBy(x: .zero, y: -barView.frame.height))
             }
             
+            // Perform new animation
             if style.animationStyle == .bounce {
                 self.completion = completion
                 self.animateBounceAnimation()

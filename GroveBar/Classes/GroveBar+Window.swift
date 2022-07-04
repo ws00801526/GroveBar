@@ -92,8 +92,10 @@ extension GroveBar.Window: BarViewControllerDelegate {
         // Update barView.frame
         let barView = barViewController.barView
         (barView.transform, barView.frame) = (.identity, .zero)
-        barView.frame = .init(origin: .zero, size: .init(width: size.width, height:  size.height + contentHeight()))
+        barView.frame = .init(origin: .zero, size: .init(width: max(size.width, UIScreen.main.bounds.width), height:  size.height + contentHeight()))
 
+        barView.setNeedsUpdateConstraints()
+        
         // Update barView.progress
         barView.animate(to: barView.progressPercent)
     }

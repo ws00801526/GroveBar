@@ -392,12 +392,7 @@ private extension GroveBar.BarView {
     }
     
     func updateContentViewConstraints() {
-        
-        // Remove all constriants added to contentView
-        let attributes: [NSLayoutConstraint.Attribute] = [.width, .height]
-        let constraints = contentView.constraints.filter({ attributes.contains($0.firstAttribute) || attributes.contains($0.secondAttribute) })
-        contentView.removeConstraints(constraints)
-        
+                
         let contentRect = contentRect()
         if style.background.style == .fullWidth {
             contentView.topAnchor.constraint(equalTo: topAnchor, constant: contentRect.origin.y).isActive = true
@@ -408,8 +403,8 @@ private extension GroveBar.BarView {
             contentView.topAnchor.constraint(equalTo: topAnchor, constant: contentRect.origin.y + style.background.topSpacing).isActive = true
             contentView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
             contentView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 20.0).isActive = true
-            contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: style.background.minimumHeight).isActive = true
             contentView.widthAnchor.constraint(greaterThanOrEqualToConstant: style.background.minimumWidth).isActive = true
+            contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: style.background.minimumHeight).isActive = true
         }
     }
     

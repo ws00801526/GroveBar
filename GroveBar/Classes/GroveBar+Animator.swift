@@ -11,14 +11,13 @@ import QuartzCore
 public protocol StyleBarViewProtocol: UIView {
     
     var style: GroveBar.Style { get }
-    
+#if DEBUG
+    func update(style: GroveBar.Style)
     var title: String? { set get }
     var subtitle: String? { set get }
     var displayIndicatorView: Bool { set get }
     func display(leftView: UIView?)
     func display(customView: UIView?)
-#if DEBUG
-    func update(style: GroveBar.Style)
 #endif
 }
 

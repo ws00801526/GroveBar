@@ -70,6 +70,7 @@ extension GroveBar.Style.ProgressBarStyle.Position: StringRepresentable {
   }
 }
 
+@available (iOS 13.0, *)
 struct EnumPickerOptionView<T: StringRepresentable>: View where T: Hashable {
   var representable: T
 

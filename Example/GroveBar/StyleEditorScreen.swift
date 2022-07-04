@@ -13,20 +13,20 @@ struct StyleEditorScreen: View {
     @StateObject var style: ObservableCustomStyle = .init(ExampleStyle.editor.buildStyle())
     @State var editingTitle: Bool = true
     
-    weak static var statusBarView: GroveBar.BarView? = nil
+    weak static var statusBarView: StyleBarViewProtocol? = nil
     
     func presentDefault(allowActivity: Bool = true, allowProgress: Bool = true, completion: @escaping () -> Void) {
         
         
         StyleEditorScreen.statusBarView = GroveBar.shared.present(stylable: style.registerComputedStyle(), title: text, subtitle: subtitle, completion: { _ in
             completion()
-        }) as? GroveBar.BarView
+        }) as? StyleBarViewProtocol
         if allowActivity && showActivity { GroveBar.shared.displayIndicatorView = showActivity }
         if allowProgress && progress > 0.0 { GroveBar.shared.update(progress: Float(progress)) }
     }
     
     func updateStyleOfPresentedView() {
-        StyleEditorScreen.statusBarView?.style = style.computedStyle()
+        StyleEditorScreen.statusBarView?.update(style: style.computedStyle())
         StyleEditorScreen.statusBarView?.window?.rootViewController?.setNeedsStatusBarAppearanceUpdate()
     }
     

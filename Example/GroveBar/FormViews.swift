@@ -72,6 +72,7 @@ struct CGPointStepper: View {
   }
 }
 
+@available (iOS 13.0, *)
 struct SegmentedPicker<T, SomeView>: View where T: Hashable, SomeView: View {
   var title: String
   @Binding var value: T

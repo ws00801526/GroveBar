@@ -42,13 +42,15 @@ fileprivate extension GroveBar {
 
 public extension GroveBar {
 
-    /// Present a notification using a specified ``GroveBar.Style``.
+    static var defaultStyle: GroveBar.Style { GroveBar.shared.styleCache.defaultStyle }
+    
+    /// Present a notification using a specified ``Style``.
     /// - Parameters:
     ///   - stylable:
-    ///   The name of the style. You can use styles previously added using e.g. ``addStyle(for:with:):``.
+    ///   The name of the style. You can use styles previously added using e.g. ``addStyle(for:with:)``.
     ///   If no style can be found for the given `styleName` or it is `nil`, the default style will be used.
-    ///   Or you can provide  the ``GroveBar.Style.BuiltInStyle``.
-    ///   Or you can just provide ``GroveBar.Style`` instance..
+    ///   Or you can provide  the ``Style/BuiltInStyle``.
+    ///   Or you can just provide ``Style`` instance..
     ///
     ///   - title: The title to display
     ///   - subtitle: The subtitle to display
@@ -58,7 +60,7 @@ public extension GroveBar {
     ///   - completion: The handler which will be called after notificaiton displayed.
     /// - Returns: The `GroveBar.BarView` instance.
     @discardableResult
-    func present(stylable: GroveBarStyable = GroveBar.Style.BuiltInStyle.default,
+    func present(stylable: GroveBarStyable = GroveBar.defaultStyle,
                  title: String? = nil,
                  subtitle: String? = nil,
                  leftView: UIView? = nil,
@@ -114,7 +116,7 @@ public extension GroveBar {
     ///
     /// The new style will be used in all future presentations that have no specific style specified.
     ///
-    /// - Parameter handler:  Provides the current default ``GroveBar.Style`` instance for further customization.
+    /// - Parameter handler:  Provides the current default ``Style`` instance for further customization.
     func updateDefaultStyle(with handler: Style.StyleHandler) {
         styleCache.updateDefaultStyle(with: handler)
     }
@@ -122,11 +124,11 @@ public extension GroveBar {
     
     /// Adds a new custom style. This can be used by referencing it using the `styleName`.
     ///
-    /// The added style can be used in future presentations by utilizing the same `styleName` in e.g. ``present(stylable:)``.
+    /// The added style can be used in future presentations by utilizing the same `styleName` in e.g. ``present(stylable:title:subtitle:leftView:customView:dismissAfter:completion:)``.
     /// If a style with the same name already exists,  it will be replaced.
     /// - Parameters:
     ///   - name:  The styleName which will later be used to reference the added style.
-    ///   - handler:  Provides the  ``GroveBar.Style``  instance for further customization.
+    ///   - handler:  Provides the  ``Style``  instance for further customization.
     /// - Returns: Returns the `styleName`, so that this call can be used directly within a presentation call.
     @discardableResult
     func addStyle(for name: String, with handler: Style.StyleHandler) -> String {
@@ -136,12 +138,12 @@ public extension GroveBar {
     
     /// Adds a new custom style. This can be used by referencing it using the `styleName`.
     ///
-    /// The added style can be used in future presentations by utilizing the same `styleName` in e.g. ``present(stylable:)``.
+    /// The added style can be used in future presentations by utilizing the same `styleName` in e.g. ``present(stylable:title:subtitle:leftView:customView:dismissAfter:completion:)``.
     /// If a style with the same name already exists,  it will be replaced.
     /// - Parameters:
     ///   - name:  The styleName which will later be used to reference the added style.
-    ///   - builtIn: The ``GroveBar.Style.BuiltInStyle``, which you want to base your style on.
-    ///   - handler:  Provides the  ``GroveBar.Style``  instance for further customization.
+    ///   - builtIn: The ``Style/BuiltInStyle``, which you want to base your style on.
+    ///   - handler:  Provides the  ``Style``  instance for further customization.
     /// - Returns: Returns the `styleName`, so that this call can be used directly within a presentation call.
     @discardableResult
     func addStyle(for name: String, baseOn builtIn: Style.BuiltInStyle, with handler: Style.StyleHandler) -> String {
@@ -149,16 +151,16 @@ public extension GroveBar {
         return name
     }
     
-    /// Gets the ``GroveBar.Style`` of styleName.
+    /// Gets the ``Style`` of styleName.
     ///
     /// - Parameter name: The styleName which you wanted.
-    /// - Returns: The ``GroveBar.Style`` of styleName  or  default   ``GroveBar.Style``.
+    /// - Returns: The ``Style`` of styleName  or  default   ``Style``.
     func style(for name: String) -> GroveBar.Style { styleCache.style(for: name) }
 
-    /// Gets the ``GroveBar.Style`` of builtIn.
+    /// Gets the ``Style`` of builtIn.
     ///
     /// - Parameter name: The builtInStyle which you wanted.
-    /// - Returns: The builtIn ``GroveBar.Style``.
+    /// - Returns: The builtIn ``Style``.
     func style(for builtIn: GroveBar.Style.BuiltInStyle) -> GroveBar.Style { styleCache.style(for: builtIn) }
 }
 
@@ -169,11 +171,18 @@ public extension GroveBar {
     /// Check if a notification is currently displayed.
     var isVisible: Bool { window != nil }
     
+    /// Update indicator view visible state.
     var displayIndicatorView: Bool {
         set { window?.barViewController.barView.displayIndicatorView = newValue }
         get { window?.barViewController.barView.displayIndicatorView ?? false }
     }
     
+    @available (iOS 13.0, *)
+    var windowScene: UIWindowScene? {
+        set { window?.windowScene = newValue }
+        get { window?.windowScene }
+    }
+        
     /// Updates the title of an existing notification without animation.
     /// - Parameter text: The new text to display as title.
     func update(text: String?) {

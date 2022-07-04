@@ -25,6 +25,18 @@ extension GroveBar {
             self.barViewController.delegate = self
             self.rootViewController = self.barViewController
         }
+        
+        @available (iOS 13.0, *)
+        required init(windowScene: UIWindowScene, style: GroveBar.Style) {
+            self.barViewController = .init()
+            super.init(windowScene: windowScene)
+            self.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            self.backgroundColor = .clear
+            self.isUserInteractionEnabled = true
+            self.windowLevel = UIWindow.Level.statusBar
+            self.barViewController.delegate = self
+            self.rootViewController = self.barViewController
+        }
     
         @available(*, deprecated, renamed: "init(style:)", message: "using init(style:) insteaded")
         required init?(coder: NSCoder) {

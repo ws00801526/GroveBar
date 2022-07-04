@@ -8,11 +8,11 @@
 import Foundation
 
 extension GroveBar {
-    public class BarView: UIView, StyleBarViewProtocol {
+    class BarView: UIView, StyleBarViewProtocol {
         
         static let specialViewTag = 10203040
         
-        public var style: GroveBar.Style { didSet { updateStyle() } }
+        private(set) var style: GroveBar.Style { didSet { updateStyle() } }
         private(set) var leftView: UIView? { didSet { updateLeftView() } }
         private(set) var customView: UIView? { didSet { updateCustomView() } }
         private(set) var progressPercent: Float = .zero
@@ -48,19 +48,19 @@ extension GroveBar {
         @available (*, deprecated, renamed: "init(style:)", message: "using init(style:) insteaded")
         required init?(coder: NSCoder) { fatalError() }
         
-        public required init() {
+        required init() {
             self.style = .init()
             super.init(frame: .zero)
             makeUI()
             makeUIConstraints()
         }
         
-        public override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
             guard isUserInteractionEnabled else { return nil }
             return contentView.hitTest(convert(point, to: contentView), with: event)
         }
         
-        public override func updateConstraints() {
+        override func updateConstraints() {
             super.updateConstraints()
             
             removeConstraintsOf(targetView: contentView, and: [.width, .height])
@@ -93,7 +93,7 @@ extension GroveBar {
 
 // MARK: - Update Methods
 
-public extension GroveBar.BarView {
+extension GroveBar.BarView {
     
     var title: String? {
         set {
@@ -134,8 +134,7 @@ public extension GroveBar.BarView {
 // MARK: - Progress Methods
 
 internal extension GroveBar.BarView {
-    
-    
+
     private func progressRect(of percent: Float) -> CGRect {
         
         let maxWidth: CGFloat = contentView.bounds.width

@@ -5,6 +5,7 @@ import UIKit
 import Combine
 import GroveBar
 
+@available (iOS 13.0, *)
 class CustomTextStyle: ObservableObject, Equatable {
     @Published var font: UIFont
     @Published var textColor: UIColor?
@@ -50,6 +51,7 @@ class CustomTextStyle: ObservableObject, Equatable {
     }
 }
 
+@available (iOS 13.0, *)
 class ObservableCustomStyle: ObservableObject, Equatable {
     @Published var textStyle: CustomTextStyle
     @Published var subtitleStyle: CustomTextStyle

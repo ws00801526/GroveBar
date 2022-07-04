@@ -165,6 +165,8 @@ struct ExamplesScreen: View {
         customStyleCell("Looks good", subtitle: "Subtitle + Activity", style: .looksGood)
         customStyleCell("Small Pill", subtitle: "Modified pill size + Progress", style: .smallPill)
         customStyleCell("Style Editor Style", subtitle: "Subtitle + Progress", style: .editor)
+
+          customStyleCell("Custom Attribuets Style", subtitle: "Subtitle", style: .customAttribues)
       }
 
       Section("Custom View Examples") {

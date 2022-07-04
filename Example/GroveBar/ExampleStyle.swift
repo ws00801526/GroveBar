@@ -15,6 +15,8 @@ enum ExampleStyle: String, RawRepresentable, CaseIterable {
   case smallPill
   case iconLeftView
   case editor
+    
+    case customAttribues
 
   var exampleContent: NotificationContent {
     switch self {
@@ -30,6 +32,9 @@ enum ExampleStyle: String, RawRepresentable, CaseIterable {
         return NotificationContent(title: "Icon Left View")
       case .editor:
         return NotificationContent(title: "Edit me", subtitle: "in the Style Editor")
+        
+    case .customAttribues:
+        return .init(title: "Custom Attribues", subtitle: "some custom attribues of title")
     }
   }
 
@@ -95,7 +100,7 @@ enum ExampleStyle: String, RawRepresentable, CaseIterable {
         style.background.color = UIColor(red: 0.960784375667572, green: 0.9254902005195618, blue: -9.626150188069005e-08, alpha: 1.0) // "light vibrant yellow"
 
         style.background.minimumWidth = 0.0
-        style.background.height = 32.0
+        style.background.minimumHeight = 32.0
         style.background.topSpacing = 14.0
         style.background.shadowColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.33) // "black"
         style.background.shadowRadius = 4.0
@@ -113,7 +118,7 @@ enum ExampleStyle: String, RawRepresentable, CaseIterable {
         var style = GroveBar.Style()
         style.background.color = UIColor(white: 0.15, alpha: 1.0)
         style.background.minimumWidth = 200.0
-        style.background.height = 50.0
+        style.background.minimumHeight = 50.0
         style.systemStatusBar = .lightContent
         style.leftView.alignment = .left
         style.leftView.spacing = 10.0
@@ -145,6 +150,11 @@ enum ExampleStyle: String, RawRepresentable, CaseIterable {
         style.progressBar.cornerRadius = 2.0
         style.progressBar.yOffset = -4.0
 
+        return style
+        
+    case .customAttribues:
+        var style = ExampleStyle.editor.buildStyle()
+        style.title.attributes = [.font : UIFont.systemFont(ofSize: 17.0), .foregroundColor : UIColor.green]
         return style
     }
   }

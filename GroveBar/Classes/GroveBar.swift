@@ -195,8 +195,10 @@ public extension GroveBar {
     ///   - completion: The handler will be called after animation finished.
     func update(progress: Float, animationDuration duration: Double = .zero, completion: Completion? = nil) {
         guard let window = window else { return }
-        window.barViewController.barView.animate(to: progress, animateDuration: duration) { [weak self] in
-            if let completion = completion { completion(self) }
+        DispatchQueue.main.async {
+            window.barViewController.barView.animate(to: progress, animateDuration: duration) { [weak self] in
+                if let completion = completion { completion(self) }
+            }
         }
     }
 }

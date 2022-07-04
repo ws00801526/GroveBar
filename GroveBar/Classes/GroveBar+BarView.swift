@@ -138,16 +138,17 @@ internal extension GroveBar.BarView {
     
     private func progressRect(of percent: Float) -> CGRect {
         
-        let contentRect = contentView.bounds
-        if contentRect.isEmpty { return .zero }
-        let height = min(contentRect.height, max(0.5, style.progressBar.height))
-        let width = (contentRect.width - 2 * style.progressBar.horizontalInsets) * CGFloat(percent)
+        let maxWidth: CGFloat = contentView.bounds.width
+        let cSize = contentView.sizeThatFits(.init(width: maxWidth, height: -1.0))
+        if cSize.width.isZero || cSize.height.isZero { return .zero }
+        let height = min(cSize.height, max(0.5, style.progressBar.height))
+        let width = (cSize.width - 2 * style.progressBar.horizontalInsets) * CGFloat(percent)
         let xOffset = style.progressBar.horizontalInsets
         var yOffset: CGFloat = style.progressBar.yOffset
         switch style.progressBar.position {
         case .top: break
-        case .center: yOffset = ((contentRect.height - height) / 2.0).rounded() + yOffset
-        case .bottom: yOffset = contentRect.height - height + yOffset
+        case .center: yOffset = ((cSize.height - height) / 2.0).rounded() + yOffset
+        case .bottom: yOffset = cSize.height - height + yOffset
         }
         return .init(x: xOffset, y: yOffset, width: width, height: height)
     }
@@ -240,7 +241,7 @@ private extension GroveBar.BarView {
         if style.background.style == .pill {
             backgroundColor = .clear
 
-            pillView.layer.cornerRadius = style.background.height / 2.0
+            pillView.layer.cornerRadius = style.background.minimumHeight / 2.0
             pillView.layer.allowsEdgeAntialiasing = true
             if #available(iOS 13.0, *) { pillView.layer.cornerCurve = .continuous }
             pillView.layer.masksToBounds = false
@@ -408,7 +409,7 @@ private extension GroveBar.BarView {
             contentView.topAnchor.constraint(equalTo: topAnchor, constant: contentRect.origin.y + style.background.topSpacing).isActive = true
             contentView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
             contentView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 20.0).isActive = true
-            contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: style.background.height).isActive = true
+            contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: style.background.minimumHeight).isActive = true
             contentView.widthAnchor.constraint(greaterThanOrEqualToConstant: style.background.minimumWidth).isActive = true
         }
     }

@@ -59,7 +59,7 @@ extension GroveBar.Window: BarViewControllerDelegate {
             }
             return 44.0
         case .pill:
-            return style.background.height + style.background.topSpacing
+            return style.background.minimumHeight + style.background.topSpacing
         }
     }
     

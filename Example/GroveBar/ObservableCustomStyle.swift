@@ -94,7 +94,7 @@ class ObservableCustomStyle: ObservableObject, Equatable {
         minimumPillWidth = defaultStyle.background.minimumWidth
         
         // pill
-        pillHeight = defaultStyle.background.height
+        pillHeight = defaultStyle.background.minimumHeight
         pillSpacingY = defaultStyle.background.topSpacing
         pillBorderColor = defaultStyle.background.borderColor
         pillBorderWidth = defaultStyle.background.borderWidth
@@ -142,7 +142,7 @@ class ObservableCustomStyle: ObservableObject, Equatable {
         style.background.color = backgroundColor ?? .clear
         style.background.style = backgroundType
         style.background.minimumWidth = minimumPillWidth
-        style.background.height = pillHeight
+        style.background.minimumHeight = pillHeight
         style.background.topSpacing = pillSpacingY
         style.background.borderColor = pillBorderColor ?? .clear
         style.background.borderWidth = pillBorderWidth

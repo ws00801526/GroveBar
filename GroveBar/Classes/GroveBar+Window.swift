@@ -93,8 +93,6 @@ extension GroveBar.Window: BarViewControllerDelegate {
         let barView = barViewController.barView
         (barView.transform, barView.frame) = (.identity, .zero)
         barView.frame = .init(origin: .zero, size: .init(width: max(size.width, UIScreen.main.bounds.width), height:  size.height + contentHeight()))
-
-        barView.setNeedsUpdateConstraints()
         
         // Update barView.progress
         barView.animate(to: barView.progressPercent)
@@ -122,7 +120,7 @@ internal extension GroveBar {
         var allWindows: [UIWindow]
         if #available(iOS 13.0, *) {
             if let scene = window?.windowScene { allWindows = scene.windows }
-            else if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene { allWindows = scene.windows }
+            else if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene { allWindows = scene.windows }
             else { allWindows = UIApplication.shared.windows }
         } else { allWindows = UIApplication.shared.windows }
         return allWindows.first(where: { !$0.isHidden && $0 != window })

@@ -393,14 +393,13 @@ private extension GroveBar.BarView {
     
     func updateContentViewConstraints() {
                 
-        let contentRect = contentRect()
         if style.background.style == .fullWidth {
-            contentView.topAnchor.constraint(equalTo: topAnchor, constant: contentRect.origin.y).isActive = true
+            contentView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
             contentView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
             contentView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
             contentView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         } else {
-            contentView.topAnchor.constraint(equalTo: topAnchor, constant: contentRect.origin.y + style.background.topSpacing).isActive = true
+            contentView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: style.background.topSpacing).isActive = true
             contentView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
             contentView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 20.0).isActive = true
             contentView.widthAnchor.constraint(greaterThanOrEqualToConstant: style.background.minimumWidth).isActive = true

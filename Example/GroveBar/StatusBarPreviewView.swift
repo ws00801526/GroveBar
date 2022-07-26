@@ -33,7 +33,7 @@ import GroveBar
 //        self.customView = customView
 //        if let config = styleConfig { config(&self.style) }
 //    }
-//    
+//
 //    func makeUIView(context: Context) -> some UIView {
 //        let barView = GroveBar.BarView.init()
 //        barView.title = title
@@ -44,19 +44,19 @@ import GroveBar
 //        barView.update(style: style)
 //        return barView
 //    }
-//    
+//
 //    func updateUIView(_ uiView: UIViewType, context: Context) {
-//        
+//
 //    }
 //}
 //
 //@available(iOS 15.0, *)
 //struct StatusBarPreviewView_Previews: PreviewProvider {
-//    
+//
 //    static var previews: some View {
 //        ScrollView.init(.vertical, showsIndicators: true, content: {
 //            VStack(alignment: .leading) {
-//                
+//
 //                StatusBarPreviewView.init(title: "Full Style - Light",
 //                                          styleConfig: { style in
 //                    style.background.style = .fullWidth
@@ -64,7 +64,7 @@ import GroveBar
 //                    style.background.color = .lightGray
 //                })
 //                .frame(height: 94)
-//                                
+//
 //                StatusBarPreviewView.init(title: "Full Style-CustomView",
 //                                          customView: {
 //                    let view = UIView.init()
@@ -76,7 +76,7 @@ import GroveBar
 //                    style.systemStatusBar = .lightContent
 //                })
 //                .frame(height: 94)
-//                
+//
 //                StatusBarPreviewView.init(title: "Pill Style-CustomView",
 //                                          customView: {
 //                    let view = UIView.init()
@@ -95,27 +95,27 @@ import GroveBar
 //                                          defaultStyle: GroveBar.shared.style(for: .success)
 //                )
 //                .frame(height: 94)
-//                
+//
 //                StatusBarPreviewView.init(title: "PillStyle-Light",
 //                                          subtitle: "Subtitle",
 //                                          defaultStyle: GroveBar.shared.style(for: .light))
 //                .frame(height: 94)
-//                
+//
 //                StatusBarPreviewView.init(title: "PillStyle-Dark",
 //                                          displayActivity: false,
 //                                          defaultStyle: GroveBar.shared.style(for: .dark))
 //                .frame(height: 94)
-//                
+//
 //                StatusBarPreviewView.init(title: "PillStyle-Failture",
 //                                          defaultStyle: GroveBar.shared.style(for: .failure))
 //                .frame(height: 94)
-//                
-//                
+//
+//
 //                StatusBarPreviewView.init(title: "PillStyle-Warning",
 //                                          defaultStyle: GroveBar.shared.style(for: .warning))
 //                .frame(height: 94)
-//                
-//                
+//
+//
 //                StatusBarPreviewView.init(title: "Pill Style", subtitle: "i am subtitle", displayActivity: false)
 //                    .frame(height: 94)
 //

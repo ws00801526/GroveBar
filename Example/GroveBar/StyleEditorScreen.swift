@@ -17,7 +17,6 @@ struct StyleEditorScreen: View {
     
     func presentDefault(allowActivity: Bool = true, allowProgress: Bool = true, completion: @escaping () -> Void) {
         
-        
         StyleEditorScreen.statusBarView = GroveBar.shared.present(stylable: style.registerComputedStyle(), title: text, subtitle: subtitle, completion: { _ in
             completion()
         }) as? StyleBarViewProtocol
